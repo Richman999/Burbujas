@@ -1,0 +1,42 @@
+using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine;
+ [RequireComponent(typeof(MeshRenderer))] 
+public class MaterialChanger : MonoBehaviour 
+{ 
+/// <summary> 
+/// Material por asignar al objeto 
+/// </summary> 
+[SerializeField]private Material mat = null; 
+/// <summary> /// El color que se le va a asignar al material, en este caso lo pongo serializado por motivos de testing 
+/// </summary> 
+[SerializeField]private Color materialColor = Color.white; 
+private MeshRenderer renderer = null; 
+	void Awake() 
+	{ 
+	#region Asignacion automatica de material 
+	//Para asignar automaticamente el material tenemos que hacer: 
+	//1. Conseguir el mesh renderer 
+
+	renderer = GetComponent<MeshRenderer>();
+
+	 //2. Buscar el material en la libreria de assets, para esto necesitas tener una carpeta llamada "Resources" y de ahi sacas la ruta
+	//en este caso tendrias que crear un nuevo material en Assets/Resources/Materials que se llame "AutomaticMaterial" 
+	//notese que este paso se puede omitir asignando de una vez el mesh renderer a esa carga 
+
+	mat = Resources.Load<Material>("Materials/AutomaticMaterial"); 
+
+	//3. Asignar el material del mesh renderer 
+
+	renderer.sharedMaterial = mat; #endregion
+
+	} 
+	// Update is called once per frame 
+
+		void Update() 
+		{ 
+		//Aqui asigamos el color al material 
+		mat.SetColor("_Color",materialColor); 
+
+		}
+ }
